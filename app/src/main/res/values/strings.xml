@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">FootCardz-UI</string>
+    <string name="login_title">Login !</string>
+    <string name="signup_title">Signup !</string>
+    <string name="reset_password_title">Reset password !</string>
+    <string name="confirm_password_title">Confirm password !</string>
+    <string name="activation_title">Activation control !</string>
+    <string name="home_title">Home</string>
+    <string name="username_hint">Username</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="forgot_password">Forgot password ?</string>
+    <string name="login_button">Login</string>
+    <string name="signup_button">Signup</string>
+    <string name="activate_button">Activate</string>
+    <string name="logout_button">Logout</string>
+    <string name="reset_password_button">Reset</string>
+    <string name="confirm_password_button">Confirm</string>
+    <string name="create_account_prompt">You do not have an account ? Create one !</string>
+    <string name="account_already_created">Already have an account ? Login</string>
+    <string name="back_to_login">Back to Login</string>
+    <string name="code">Enter activation code</string>
+    <string name="resend_code_button">Resend</string>
+    <string name="email_required">Email is required</string>
+    <string name="username_required">Username is required</string>
+    <string name="password_required">Password is required</string>
+    <string name="password_mismatch">Passwords do not match</string>
+    <string name="code_required">Activation code is required</string>
+    <string name="reset_code_required">Reset password code is required</string>
+    <string name="network_error">Network error. Please check your connection.</string>
+    <string name="activation_success">Your account has been activated successfully!</string>
+    <string name="code_resent">Activation code resent successfully!</string>
+    <string name="password_reset_success">Password reset successfully!</string>
+    <string name="reset_password_code_resent">Reset password code resent successfully!</string>
+
+</resources>
