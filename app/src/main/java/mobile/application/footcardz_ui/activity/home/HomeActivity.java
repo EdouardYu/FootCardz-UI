@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -298,7 +299,7 @@ public class HomeActivity extends AppCompatActivity {
     private void fetchAndDisplayDailyPlayer() {
         apiService.getDailyPlayer().enqueue(new Callback<Player>() {
             @Override
-            public void onResponse(Call<Player> call, Response<Player> response) {
+            public void onResponse(@NonNull Call<Player> call, @NonNull Response<Player> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Player dailyPlayer = response.body();
 
@@ -332,7 +333,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Player> call, Throwable t) {
+            public void onFailure(@NonNull Call<Player> call, @NonNull Throwable t) {
                 Log.e("HomeActivity", "Error fetching daily player", t);
             }
         });
