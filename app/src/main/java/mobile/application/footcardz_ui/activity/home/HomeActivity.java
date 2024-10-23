@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -83,7 +84,7 @@ public class HomeActivity extends AppCompatActivity {
                 loadAllPlayers(0);
                 return true;
             } else if (itemId == R.id.nav_user_players) {
-                // fetchAndDisplayDailyPlayer();
+                // fetchAndDisplayDailyPlayer(userId);
                 loadPlayers(userId, 0);
                 return true;
             } else if (itemId == R.id.nav_logout) {
@@ -297,6 +298,49 @@ public class HomeActivity extends AppCompatActivity {
                 })
                 .into(imageView);
     }
+    private void fetchAndDisplayDailyPlayer() {
+        apiService.getDailyPlayer().enqueue(new Callback<Player>() {
+            @Override
+            public void onResponse(Call<Player> call, Response<Player> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Player dailyPlayer = response.body();
+
+                    // Inflate the custom layout for the player card popup
+                    View popupView = getLayoutInflater().inflate(R.layout.player_card_layout, null);
+                    ImageView playerImage = popupView.findViewById(R.id.playerImage);
+                    TextView playerName = popupView.findViewById(R.id.playerName);
+                    TextView playerPosition = popupView.findViewById(R.id.playerPosition);
+                    ImageView leagueImage = popupView.findViewById(R.id.leagueImage);
+                    ImageView teamImage = popupView.findViewById(R.id.teamImage);
+                    ImageView nationalityImage = popupView.findViewById(R.id.nationalityImage);
+
+                    // Set the player details
+                    playerName.setText(dailyPlayer.getName());
+                    playerPosition.setText(dailyPlayer.getPosition());
+
+                    // Load the images using Glide
+                    loadPlayerImage(playerImage, "http://10.0.2.2:8080" + dailyPlayer.getImageUrl());
+                    loadPlayerImage(leagueImage, "http://10.0.2.2:8080" + dailyPlayer.getLeagueImageUrl());
+                    loadPlayerImage(teamImage, "http://10.0.2.2:8080" + dailyPlayer.getTeamImageUrl());
+                    loadPlayerImage(nationalityImage, "http://10.0.2.2:8080" + dailyPlayer.getNationalityImageUrl());
+
+                    // Show the popup using an AlertDialog
+                    new AlertDialog.Builder(HomeActivity.this)
+                            .setView(popupView)
+                            .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
+                            .show();
+                } else {
+                    Log.d("HomeActivity", "No daily player available or error occurred.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Player> call, Throwable t) {
+                Log.e("HomeActivity", "Error fetching daily player", t);
+            }
+        });
+    }
+
 
 
     private void redirectToLogin() {
