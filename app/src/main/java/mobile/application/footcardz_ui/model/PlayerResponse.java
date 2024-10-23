@@ -22,15 +22,12 @@ public class PlayerResponse {
     public void setPage(PageInfo page) {
         this.page = page;
     }
-
-    // Inner class to represent the page information
     public static class PageInfo {
         private int size;
         private int number;
         private int totalElements;
         private int totalPages;
 
-        // Getters and Setters
         public int getSize() {
             return size;
         }

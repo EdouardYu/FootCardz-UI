@@ -34,5 +34,13 @@
     <string name="code_resent">Activation code resent successfully!</string>
     <string name="password_reset_success">Password reset successfully!</string>
     <string name="reset_password_code_resent">Reset password code resent successfully!</string>
+    <string name="player_team">Player Team</string>
+    <string name="player_nationality">Player Nationality</string>
+    <string name="player_league">Player League</string>
+    <string name="position">Position</string>
+    <string name="player_name">Player Name</string>
+    <string name="player_image">Player Image</string>
+    <string name="user_players">User Players</string>
+    <string name="all_players">All Players</string>
 
 </resources>

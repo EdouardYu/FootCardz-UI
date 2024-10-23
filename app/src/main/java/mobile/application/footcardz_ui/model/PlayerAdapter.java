@@ -1,7 +1,6 @@
 package mobile.application.footcardz_ui.model;
 
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,26 +23,22 @@ import java.util.List;
 import mobile.application.footcardz_ui.R;
 
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder> {
-
     List<Player> playerList;
-    private String baseUrl = "http://10.0.2.2:8080/api";  // Update this as needed for production
-
     public PlayerAdapter(List<Player> playerList) {
         this.playerList = playerList;
     }
 
-    // Method to reset the player list and notify the adapter
     public void setPlayers(List<Player> newPlayers) {
-        this.playerList.clear();  // Clear the existing players
-        this.playerList.addAll(newPlayers);  // Add the new players
-        notifyDataSetChanged();  // Notify the adapter to refresh the UI
+        this.playerList.clear();
+        this.playerList.addAll(newPlayers);
+        notifyDataSetChanged();
     }
 
     // Method to add new players to the list
     public void addPlayers(List<Player> newPlayers) {
         //int startPosition = playerList.size();  // Get current size
-        playerList.addAll(newPlayers);          // Add new players to the list
-        notifyItemInserted(playerList.size() - 1);  // Notify the adapter
+        playerList.addAll(newPlayers);
+        notifyItemInserted(playerList.size() - 1);
     }
 
     @NonNull

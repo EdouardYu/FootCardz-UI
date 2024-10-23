@@ -3,13 +3,13 @@
 
     <item
         android:id="@+id/nav_all_players"
-        android:title="All Players" />
+        android:title="@string/all_players" />
 
     <item
         android:id="@+id/nav_user_players"
-        android:title="User Players" />
+        android:title="@string/user_players" />
 
     <item
         android:id="@+id/nav_logout"
-        android:title="Logout" />
+        android:title="@string/login_button" />
 </menu>

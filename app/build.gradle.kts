@@ -36,7 +36,6 @@ android {
 }
 
 dependencies {
-    // Core dependencies for Android development
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -46,14 +45,12 @@ dependencies {
     annotationProcessor(libs.compiler)
     implementation(libs.jwtdecode.v201)
 
-    // Retrofit for network requests
     implementation(libs.retrofit)
-    implementation(libs.converter.gson) // Gson converter for handling JSON data
+    implementation(libs.converter.gson)
 
-    // Unit testing dependencies
-    testImplementation(libs.junit) // JUnit for unit testing
-    androidTestImplementation(libs.ext.junit) // Extended JUnit for Android tests
-    androidTestImplementation(libs.espresso.core) // Espresso for UI testing
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 
     implementation(libs.logging.interceptor.v4100)
 }

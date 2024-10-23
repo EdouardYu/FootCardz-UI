@@ -5,9 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import mobile.application.footcardz_ui.MainActivity;
 import mobile.application.footcardz_ui.R;
 import mobile.application.footcardz_ui.activity.authentication.LoginActivity;
 import mobile.application.footcardz_ui.model.ErrorResponse;
@@ -50,9 +47,8 @@ public class HomeActivity extends AppCompatActivity {
     private ApiService apiService;
     private TokenManager tokenManager;
 
-    private RecyclerView recyclerView;
     private PlayerAdapter playerAdapter;
-    private int currentTabId = R.id.nav_all_players; // initial tab
+    private int currentTabId = R.id.nav_all_players;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
         apiService = RetrofitClient.getApiService(this);
         tokenManager = new TokenManager(this);
         int userId = Integer.parseInt(Objects.requireNonNull(JwtUtils.getSubject(tokenManager.getToken())));
-        recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         playerAdapter = new PlayerAdapter(new ArrayList<>());
         recyclerView.setAdapter(playerAdapter);
@@ -70,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
         SearchView searchViewAllPlayers = findViewById(R.id.searchViewAllPlayers);
         SearchView searchViewMyPlayers = findViewById(R.id.searchViewMyPlayers);
 
-        searchViewAllPlayers.setVisibility(View.GONE);  // Commencez par cacher une des deux
+        searchViewAllPlayers.setVisibility(View.GONE);
         searchViewMyPlayers.setVisibility(View.VISIBLE);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -90,7 +86,6 @@ public class HomeActivity extends AppCompatActivity {
                 attemptLogout();
                 return true;
             } else {
-                // Handle other cases if necessary
                 return false;
             }
         });
@@ -117,7 +112,7 @@ public class HomeActivity extends AppCompatActivity {
         searchViewAllPlayers.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (currentTabId == R.id.nav_all_players) { // Assurez-vous que l'onglet All Players est actif
+                if (currentTabId == R.id.nav_all_players) {
                     searchAllPlayers(query, 0);
                 }
                 return true;
@@ -125,7 +120,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (currentTabId == R.id.nav_all_players) { // Idem pour la modification du texte
+                if (currentTabId == R.id.nav_all_players) {
                     if (newText.isEmpty()) {
                         loadAllPlayers(0);
                     } else {
@@ -145,7 +140,7 @@ public class HomeActivity extends AppCompatActivity {
     private void loadAllPlayers(int page) {
         apiService.getAllPlayers(page, 30).enqueue(new Callback<PlayerResponse>() {
             @Override
-            public void onResponse(Call<PlayerResponse> call, Response<PlayerResponse> response) {
+            public void onResponse(@NonNull Call<PlayerResponse> call, @NonNull Response<PlayerResponse> response) {
                 if (currentTabId != R.id.nav_all_players) {
                     Log.d("HomeActivity", "Ignoring all players load for inactive tab");
                     return;
@@ -166,7 +161,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<PlayerResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<PlayerResponse> call, @NonNull Throwable t) {
                 if (currentTabId != R.id.nav_all_players) {
                     Log.d("HomeActivity", "Ignoring failure for inactive tab");
                     return;
@@ -179,7 +174,7 @@ public class HomeActivity extends AppCompatActivity {
     private void loadPlayers(int userId, int page) {
         apiService.getPlayers(userId, page, 30).enqueue(new Callback<PlayerResponse>() {
             @Override
-            public void onResponse(Call<PlayerResponse> call, Response<PlayerResponse> response) {
+            public void onResponse(@NonNull Call<PlayerResponse> call, @NonNull Response<PlayerResponse> response) {
                 if (currentTabId != R.id.nav_user_players) {
                     Log.d("HomeActivity", "Ignoring user players load for inactive tab");
                     return;
@@ -197,7 +192,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<PlayerResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<PlayerResponse> call, @NonNull Throwable t) {
                 if (currentTabId != R.id.nav_user_players) {
                     Log.d("HomeActivity", "Ignoring failure for inactive tab");
                     return;
@@ -210,7 +205,7 @@ public class HomeActivity extends AppCompatActivity {
     private void searchPlayersForUser(int userId, String searchTerm, int page) {
         apiService.searchPlayersForUser(userId, searchTerm, page).enqueue(new Callback<PlayerResponse>() {
             @Override
-            public void onResponse(Call<PlayerResponse> call, Response<PlayerResponse> response) {
+            public void onResponse(@NonNull Call<PlayerResponse> call, @NonNull Response<PlayerResponse> response) {
                 if (currentTabId != R.id.nav_user_players) {
                     return;
                 }
@@ -227,7 +222,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<PlayerResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<PlayerResponse> call, @NonNull Throwable t) {
                 if (currentTabId != R.id.nav_user_players) {
                     Log.d("HomeActivity", "Ignoring search failure for inactive tab");
                     return;
@@ -240,7 +235,7 @@ public class HomeActivity extends AppCompatActivity {
     private void searchAllPlayers(String searchTerm, int page) {
         apiService.searchPlayers(searchTerm, page).enqueue(new Callback<PlayerResponse>() {
             @Override
-            public void onResponse(Call<PlayerResponse> call, Response<PlayerResponse> response) {
+            public void onResponse(@NonNull Call<PlayerResponse> call, @NonNull Response<PlayerResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Player> players = response.body().getContent();
                     if (page == 0) {
@@ -254,7 +249,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<PlayerResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<PlayerResponse> call, @NonNull Throwable t) {
                 Toast.makeText(HomeActivity.this, "Error during search", Toast.LENGTH_SHORT).show();
             }
         });
@@ -264,14 +259,16 @@ public class HomeActivity extends AppCompatActivity {
         apiService.logout().enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                tokenManager.clearTokens();
+
                 if (response.isSuccessful()) {
-                    tokenManager.clearTokens();
                     Toast.makeText(HomeActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
-                    redirectToLogin();
                 } else {
                     ErrorResponse errorResponse = ApiErrorUtils.parseError(HomeActivity.this, response);
-                    Toast.makeText(HomeActivity.this, "Error: " + errorResponse.getMessage(), Toast.LENGTH_LONG).show();
+                    Log.e("Logout", "Error: " + errorResponse.getMessage());
                 }
+
+                redirectToLogin();
             }
 
             @Override
