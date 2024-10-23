@@ -70,7 +70,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
         return playerList.size();
     }
 
-    private void loadPlayerImage(ImageView imageView, String imageUrl) {
+    public void loadPlayerImage(ImageView imageView, String imageUrl) {
         Glide.with(imageView.getContext())
                 .load(imageUrl)
                 .listener(new RequestListener<Drawable>() {
