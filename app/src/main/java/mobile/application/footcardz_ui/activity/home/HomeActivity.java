@@ -81,7 +81,7 @@ public class HomeActivity extends AppCompatActivity {
                 loadAllPlayers(0);
                 return true;
             } else if (itemId == R.id.nav_user_players) {
-                // fetchAndDisplayDailyPlayer(userId);
+                fetchAndDisplayDailyPlayer();
                 loadPlayers(userId, 0);
                 return true;
             } else if (itemId == R.id.nav_logout) {
@@ -174,7 +174,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void loadPlayers(int userId, int page) {
-        apiService.getPlayers(userId, page, 30).enqueue(new Callback<PlayerResponse>() {
+        apiService.getPlayers(userId, page, 100).enqueue(new Callback<PlayerResponse>() {
             @Override
             public void onResponse(@NonNull Call<PlayerResponse> call, @NonNull Response<PlayerResponse> response) {
                 if (currentTabId != R.id.nav_user_players) {
@@ -280,22 +280,6 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void loadPlayerImage(ImageView imageView, String imageUrl) {
-        Glide.with(this)
-                .load(imageUrl)
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        Log.e("HomeActivity", "Image load failed for url: " + imageUrl, e);
-                        return false;
-                    }
-
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        return false;
-                    }
-                })
-                .into(imageView);
-    }
     private void fetchAndDisplayDailyPlayer() {
         apiService.getDailyPlayer().enqueue(new Callback<Player>() {
             @Override
@@ -315,12 +299,14 @@ public class HomeActivity extends AppCompatActivity {
                     // Set the player details
                     playerName.setText(dailyPlayer.getName());
                     playerPosition.setText(dailyPlayer.getPosition());
+                    Log.e("daily",dailyPlayer.toString());
 
-                    // Load the images using Glide
-                    loadPlayerImage(playerImage, "http://10.0.2.2:8080" + dailyPlayer.getImageUrl());
-                    loadPlayerImage(leagueImage, "http://10.0.2.2:8080" + dailyPlayer.getLeagueImageUrl());
-                    loadPlayerImage(teamImage, "http://10.0.2.2:8080" + dailyPlayer.getTeamImageUrl());
-                    loadPlayerImage(nationalityImage, "http://10.0.2.2:8080" + dailyPlayer.getNationalityImageUrl());
+                    // Load the images using the existing `loadPlayerImage` method
+                    PlayerAdapter playerAdapter = new PlayerAdapter(new ArrayList<>());
+                    playerAdapter.loadPlayerImage(playerImage, "http://10.0.2.2:8080" + dailyPlayer.getImageUrl());
+                    playerAdapter.loadPlayerImage(leagueImage, "http://10.0.2.2:8080" + dailyPlayer.getLeagueImageUrl());
+                    playerAdapter.loadPlayerImage(teamImage, "http://10.0.2.2:8080" + dailyPlayer.getTeamImageUrl());
+                    playerAdapter.loadPlayerImage(nationalityImage, "http://10.0.2.2:8080" + dailyPlayer.getNationalityImageUrl());
 
                     // Show the popup using an AlertDialog
                     new AlertDialog.Builder(HomeActivity.this)
@@ -337,6 +323,7 @@ public class HomeActivity extends AppCompatActivity {
                 Log.e("HomeActivity", "Error fetching daily player", t);
             }
         });
+
     }
 
 
