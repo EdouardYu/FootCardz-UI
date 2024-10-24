@@ -105,6 +105,7 @@ public class UserActivity extends AppCompatActivity {
         });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_user_players);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_all_players) {
                 startActivity(new Intent(UserActivity.this, HomeActivity.class));
