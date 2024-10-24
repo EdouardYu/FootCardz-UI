@@ -3,61 +3,37 @@ package mobile.application.footcardz_ui.model;
 import java.util.List;
 
 public class PlayerResponse {
-    private List<Player> content;
-    private PageInfo page;
+    private final List<Player> content;
+    private final PageInfo page;
 
-    // Getters and Setters
-    public List<Player> getContent() {
-        return content;
+    public PlayerResponse(List<Player> content, PageInfo page) {
+        this.content = content;
+        this.page = page;
     }
 
-    public void setContent(List<Player> content) {
-        this.content = content;
+    public List<Player> getContent() {
+        return content;
     }
 
     public PageInfo getPage() {
         return page;
     }
 
-    public void setPage(PageInfo page) {
-        this.page = page;
-    }
     public static class PageInfo {
-        private int size;
-        private int number;
-        private int totalElements;
-        private int totalPages;
+        private final int size;
+        private final int number;
+        private final int totalElements;
+        private final int totalPages;
 
-        public int getSize() {
-            return size;
-        }
-
-        public void setSize(int size) {
+        public PageInfo(int size, int number, int totalElements, int totalPages) {
             this.size = size;
-        }
-
-        public int getNumber() {
-            return number;
-        }
-
-        public void setNumber(int number) {
             this.number = number;
-        }
-
-        public int getTotalElements() {
-            return totalElements;
-        }
-
-        public void setTotalElements(int totalElements) {
             this.totalElements = totalElements;
+            this.totalPages = totalPages;
         }
 
         public int getTotalPages() {
             return totalPages;
-        }
-
-        public void setTotalPages(int totalPages) {
-            this.totalPages = totalPages;
         }
     }
 }

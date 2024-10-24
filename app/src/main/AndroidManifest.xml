@@ -52,5 +52,10 @@
             android:name=".activity.home.HomeActivity"
             android:exported="false"
             android:theme="@style/Theme.FootCardzUI" />
+
+        <activity
+            android:name=".activity.home.UserActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FootCardzUI" />
     </application>
 </manifest>

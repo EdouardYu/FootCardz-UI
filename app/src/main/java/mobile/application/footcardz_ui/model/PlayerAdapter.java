@@ -34,9 +34,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
         notifyDataSetChanged();
     }
 
-    // Method to add new players to the list
     public void addPlayers(List<Player> newPlayers) {
-        //int startPosition = playerList.size();  // Get current size
         playerList.addAll(newPlayers);
         notifyItemInserted(playerList.size() - 1);
     }
@@ -53,11 +51,9 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     public void onBindViewHolder(@NonNull PlayerViewHolder holder, int position) {
         Player player = playerList.get(position);
 
-        // Set text values
         holder.playerName.setText(player.getName());
         holder.playerPosition.setText(player.getPosition());
 
-        // Load images using Glide with error handling
         loadPlayerImage(holder.playerImage, "http://10.0.2.2:8080" + player.getImageUrl());
         loadPlayerImage(holder.leagueImage, "http://10.0.2.2:8080" + player.getLeagueImageUrl());
         loadPlayerImage(holder.teamImage, "http://10.0.2.2:8080" + player.getTeamImageUrl());
@@ -66,7 +62,6 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
 
     @Override
     public int getItemCount() {
-        System.out.println("yes : " + playerList.size());
         return playerList.size();
     }
 
@@ -76,7 +71,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        return false;  // Important to return false so the error placeholder can be put
+                        return false;
                     }
 
                     @Override

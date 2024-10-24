@@ -2,6 +2,8 @@ package mobile.application.footcardz_ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (!JwtUtils.isTokenExpired(bearerToken)) {
-            JwtUtils.logTokenClaims(bearerToken);
             goToHome();
             return;
         }
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        tokenManager.clearTokens();
         refreshAccessToken(refreshToken);
     }
 
@@ -67,15 +69,14 @@ public class MainActivity extends AppCompatActivity {
                     goToHome();
                 } else {
                     ErrorResponse errorResponse = ApiErrorUtils.parseError(MainActivity.this, response);
-                    System.out.println("Error: " + errorResponse.getMessage());
+                    Log.e("RefreshAccessToken", "Error: " + errorResponse.getMessage());
                     goToLogin();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
-                // Handle network failure
-                System.out.println("Network failure: " + t.getMessage());
+                Log.e("RefreshAccessToken", "Error: " + t.getMessage());
                 goToLogin();
             }
         });
