@@ -1,1 +1,1 @@
-launch the backend (available: https://github.com/EdouardYu/FootCardz) before launching the application
+Launch the backend (available: https://github.com/EdouardYu/FootCardz) before launching the application
